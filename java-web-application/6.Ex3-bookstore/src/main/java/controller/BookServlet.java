@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.BookDAO;
 import model.Book;
@@ -42,6 +43,12 @@ public class BookServlet extends HttpServlet {
 			case "/cart":
 				cart(request, response);
 				break;
+			case "/addCart":
+				addCart(request, response);
+				break;
+			case "/logout":
+				logout(request, response);
+				break;
 			default:
 				listBook(request, response);
 				break;
@@ -61,8 +68,12 @@ public class BookServlet extends HttpServlet {
 	
 	private void cart(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect("/login");
+			return;
+		}
+		response.sendRedirect("cart");
 	}
 
 	private void listBook(HttpServletRequest request, HttpServletResponse response)
@@ -73,4 +84,17 @@ public class BookServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
+	private void logout(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+		    session.invalidate();
+		}
+		response.sendRedirect("list");
+	}
+	
+	private void addCart(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+	}
 }

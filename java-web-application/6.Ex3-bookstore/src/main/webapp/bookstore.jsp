@@ -31,7 +31,15 @@
 		      	String name = (String) session.getAttribute("user");
 				if (name != null) {
 		  	%>
-		  			<span style="float: right;"> Xin chao <%=name %> </span>
+		  	<ul class="navbar-nav">
+				<li>
+						<span> Xin chao <%=name %> </span>
+			  			<span> <a href="<%=request.getContextPath()%>/logout">Dang Xuat</a> </span>
+				</li>
+			</ul>
+		  			
+		  	<% } else { %>
+		  			<span> <a href="<%=request.getContextPath()%>/login">Dang nhap</a> </span>
 		  	<% } %>
 		</nav>
 	</header>
@@ -64,7 +72,7 @@
 		                    <td><c:out value="${book.price}" /></td>
 		                    <td><c:out value="${book.publisher}" /></td>
 		                    <td>
-								<a href="#">Add to cart</a>
+								<a href="<%=request.getContextPath()%>/addCart">Add to cart</a>
 							</td>
 		                </tr>
 		            </c:forEach>
